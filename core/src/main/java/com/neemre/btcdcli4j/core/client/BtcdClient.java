@@ -8,31 +8,7 @@ import java.util.Properties;
 
 import com.neemre.btcdcli4j.core.BitcoindException;
 import com.neemre.btcdcli4j.core.CommunicationException;
-import com.neemre.btcdcli4j.core.domain.Account;
-import com.neemre.btcdcli4j.core.domain.AddedNode;
-import com.neemre.btcdcli4j.core.domain.Address;
-import com.neemre.btcdcli4j.core.domain.AddressInfo;
-import com.neemre.btcdcli4j.core.domain.AddressOverview;
-import com.neemre.btcdcli4j.core.domain.Block;
-import com.neemre.btcdcli4j.core.domain.BlockChainInfo;
-import com.neemre.btcdcli4j.core.domain.Info;
-import com.neemre.btcdcli4j.core.domain.MemPoolInfo;
-import com.neemre.btcdcli4j.core.domain.MiningInfo;
-import com.neemre.btcdcli4j.core.domain.MultiSigAddress;
-import com.neemre.btcdcli4j.core.domain.NetworkInfo;
-import com.neemre.btcdcli4j.core.domain.NetworkTotals;
-import com.neemre.btcdcli4j.core.domain.Output;
-import com.neemre.btcdcli4j.core.domain.OutputOverview;
-import com.neemre.btcdcli4j.core.domain.Payment;
-import com.neemre.btcdcli4j.core.domain.PeerNode;
-import com.neemre.btcdcli4j.core.domain.RawTransactionOverview;
-import com.neemre.btcdcli4j.core.domain.RedeemScript;
-import com.neemre.btcdcli4j.core.domain.SignatureResult;
-import com.neemre.btcdcli4j.core.domain.SinceBlock;
-import com.neemre.btcdcli4j.core.domain.Tip;
-import com.neemre.btcdcli4j.core.domain.Transaction;
-import com.neemre.btcdcli4j.core.domain.TxOutSetInfo;
-import com.neemre.btcdcli4j.core.domain.WalletInfo;
+import com.neemre.btcdcli4j.core.domain.*;
 
 public interface BtcdClient {
 	
@@ -49,7 +25,7 @@ public interface BtcdClient {
 	MultiSigAddress createMultiSig(Integer minSignatures, List<String> addresses) 
 			throws BitcoindException, CommunicationException;
 
-	String createRawTransaction(List<OutputOverview> outputs, Map<String, BigDecimal> toAddresses) 
+	String createRawTransaction(List<RawInput> inputs, Map<String, BigDecimal> toAddresses)
 			throws BitcoindException, CommunicationException;
 	/**
 	 *
@@ -120,10 +96,6 @@ public interface BtcdClient {
 	Integer getConnectionCount() throws BitcoindException, CommunicationException;
 
 	BigDecimal getDifficulty() throws BitcoindException, CommunicationException;
-
-	Boolean getGenerate() throws BitcoindException, CommunicationException;
-
-	Long getHashesPerSec() throws BitcoindException, CommunicationException;
 
 	Info getInfo() throws BitcoindException, CommunicationException;
 
@@ -332,9 +304,7 @@ public interface BtcdClient {
 	void setAccount(String address, String account) throws BitcoindException, 
 			CommunicationException;
 
-	void setGenerate(Boolean isGenerate) throws BitcoindException, CommunicationException;
-
-	void setGenerate(Boolean isGenerate, Integer processors) throws BitcoindException, 
+	void generate(Integer blocks, Integer maxTries) throws BitcoindException,
 			CommunicationException;
 
 	Boolean setTxFee(BigDecimal txFee) throws BitcoindException, CommunicationException;

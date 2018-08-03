@@ -6,37 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.neemre.btcdcli4j.core.domain.*;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import com.neemre.btcdcli4j.core.BitcoindException;
 import com.neemre.btcdcli4j.core.Commands;
 import com.neemre.btcdcli4j.core.CommunicationException;
 import com.neemre.btcdcli4j.core.client.BtcdClientImpl;
-import com.neemre.btcdcli4j.core.domain.Account;
-import com.neemre.btcdcli4j.core.domain.AddedNode;
-import com.neemre.btcdcli4j.core.domain.Address;
-import com.neemre.btcdcli4j.core.domain.AddressInfo;
-import com.neemre.btcdcli4j.core.domain.AddressOverview;
-import com.neemre.btcdcli4j.core.domain.Block;
-import com.neemre.btcdcli4j.core.domain.BlockChainInfo;
-import com.neemre.btcdcli4j.core.domain.Info;
-import com.neemre.btcdcli4j.core.domain.MemPoolInfo;
-import com.neemre.btcdcli4j.core.domain.MiningInfo;
-import com.neemre.btcdcli4j.core.domain.MultiSigAddress;
-import com.neemre.btcdcli4j.core.domain.NetworkInfo;
-import com.neemre.btcdcli4j.core.domain.NetworkTotals;
-import com.neemre.btcdcli4j.core.domain.Output;
-import com.neemre.btcdcli4j.core.domain.OutputOverview;
-import com.neemre.btcdcli4j.core.domain.Payment;
-import com.neemre.btcdcli4j.core.domain.PeerNode;
-import com.neemre.btcdcli4j.core.domain.RawTransactionOverview;
-import com.neemre.btcdcli4j.core.domain.RedeemScript;
-import com.neemre.btcdcli4j.core.domain.SignatureResult;
-import com.neemre.btcdcli4j.core.domain.SinceBlock;
-import com.neemre.btcdcli4j.core.domain.Tip;
-import com.neemre.btcdcli4j.core.domain.Transaction;
-import com.neemre.btcdcli4j.core.domain.TxOutSetInfo;
-import com.neemre.btcdcli4j.core.domain.WalletInfo;
 
 import static com.neemre.btcdcli4j.examples.util.OutputUtils.printResult;
 
@@ -95,11 +71,10 @@ public class VerboseBtcdClientImpl extends BtcdClientImpl {
 	}
 
 	@Override
-	public String createRawTransaction(List<OutputOverview> outputs, 
-			Map<String, BigDecimal> toAddresses) throws BitcoindException, CommunicationException {
-		String hexTransaction = super.createRawTransaction(outputs, toAddresses);
-		printResult(Commands.CREATE_RAW_TRANSACTION.getName(), new String[]{"outputs", 
-				"toAddresses"}, new Object[]{outputs, toAddresses}, hexTransaction);
+	public String createRawTransaction(List<RawInput> inputs, Map<String, BigDecimal> outputs) throws BitcoindException, CommunicationException {
+		String hexTransaction = super.createRawTransaction(inputs, outputs);
+		printResult(Commands.CREATE_RAW_TRANSACTION.getName(), new String[]{"inputs",
+				"outputs"}, new Object[]{inputs, outputs}, hexTransaction);
 		return hexTransaction;
 	}
 
@@ -302,20 +277,6 @@ public class VerboseBtcdClientImpl extends BtcdClientImpl {
 		BigDecimal difficulty = super.getDifficulty();
 		printResult(Commands.GET_DIFFICULTY.getName(), null, null, difficulty);
 		return difficulty;
-	}
-
-	@Override
-	public Boolean getGenerate() throws BitcoindException, CommunicationException {
-		Boolean isGenerate = super.getGenerate();
-		printResult(Commands.GET_GENERATE.getName(), null, null, isGenerate);
-		return isGenerate;
-	}
-
-	@Override
-	public Long getHashesPerSec() throws BitcoindException, CommunicationException {
-		Long hashesPerSec = super.getHashesPerSec();
-		printResult(Commands.GET_HASHES_PER_SEC.getName(), null, null, hashesPerSec);
-		return hashesPerSec;
 	}
 
 	@Override
@@ -997,18 +958,10 @@ public class VerboseBtcdClientImpl extends BtcdClientImpl {
 	}
 
 	@Override
-	public void setGenerate(Boolean isGenerate) throws BitcoindException, CommunicationException {
-		super.setGenerate(isGenerate);
-		printResult(Commands.SET_GENERATE.getName(), new String[]{"isGenerate"}, 
-				new Object[]{isGenerate}, null);
-	}
-
-	@Override
-	public void setGenerate(Boolean isGenerate, Integer processors) throws BitcoindException, 
-			CommunicationException {
-		super.setGenerate(isGenerate, processors);
-		printResult(Commands.SET_GENERATE.getName(), new String[]{"isGenerate", "processors"},
-				new Object[]{isGenerate, processors}, null);
+	public void generate(Integer blocks, Integer maxTries) throws BitcoindException, CommunicationException {
+		super.generate(blocks, maxTries);
+		printResult(Commands.GENERATE.getName(), new String[]{"blocks", "maxTries"},
+				new Object[]{blocks, maxTries}, null);
 	}
 
 	@Override

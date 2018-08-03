@@ -16,6 +16,6 @@ public class DeprecatedApi {
 		Properties nodeConfig = ResourceUtils.getNodeConfig();
 		BtcdClient client = new VerboseBtcdClientImpl(httpProvider, nodeConfig);
 		
-		client.getHashesPerSec();
+//		client.getHashesPerSec();
 	}
 }

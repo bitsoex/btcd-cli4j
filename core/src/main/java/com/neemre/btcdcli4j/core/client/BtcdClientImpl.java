@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.neemre.btcdcli4j.core.domain.*;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,33 +17,6 @@ import com.neemre.btcdcli4j.core.Commands;
 import com.neemre.btcdcli4j.core.CommunicationException;
 import com.neemre.btcdcli4j.core.common.DataFormats;
 import com.neemre.btcdcli4j.core.common.Defaults;
-import com.neemre.btcdcli4j.core.domain.Account;
-import com.neemre.btcdcli4j.core.domain.AddedNode;
-import com.neemre.btcdcli4j.core.domain.Address;
-import com.neemre.btcdcli4j.core.domain.AddressInfo;
-import com.neemre.btcdcli4j.core.domain.AddressOverview;
-import com.neemre.btcdcli4j.core.domain.Block;
-import com.neemre.btcdcli4j.core.domain.BlockChainInfo;
-import com.neemre.btcdcli4j.core.domain.Info;
-import com.neemre.btcdcli4j.core.domain.MemPoolInfo;
-import com.neemre.btcdcli4j.core.domain.MemPoolTransaction;
-import com.neemre.btcdcli4j.core.domain.MiningInfo;
-import com.neemre.btcdcli4j.core.domain.MultiSigAddress;
-import com.neemre.btcdcli4j.core.domain.NetworkInfo;
-import com.neemre.btcdcli4j.core.domain.NetworkTotals;
-import com.neemre.btcdcli4j.core.domain.Output;
-import com.neemre.btcdcli4j.core.domain.OutputOverview;
-import com.neemre.btcdcli4j.core.domain.Payment;
-import com.neemre.btcdcli4j.core.domain.PeerNode;
-import com.neemre.btcdcli4j.core.domain.RawTransaction;
-import com.neemre.btcdcli4j.core.domain.RawTransactionOverview;
-import com.neemre.btcdcli4j.core.domain.RedeemScript;
-import com.neemre.btcdcli4j.core.domain.SignatureResult;
-import com.neemre.btcdcli4j.core.domain.SinceBlock;
-import com.neemre.btcdcli4j.core.domain.Tip;
-import com.neemre.btcdcli4j.core.domain.Transaction;
-import com.neemre.btcdcli4j.core.domain.TxOutSetInfo;
-import com.neemre.btcdcli4j.core.domain.WalletInfo;
 import com.neemre.btcdcli4j.core.jsonrpc.client.JsonRpcClient;
 import com.neemre.btcdcli4j.core.jsonrpc.client.JsonRpcClientImpl;
 import com.neemre.btcdcli4j.core.util.CollectionUtils;
@@ -156,10 +130,8 @@ public class BtcdClientImpl implements BtcdClient {
 	}
 
 	@Override
-	public String createRawTransaction(List<OutputOverview> outputs, 
-			Map<String, BigDecimal> toAddresses) throws BitcoindException, CommunicationException {
-		toAddresses = NumberUtils.setValueScale(toAddresses, Defaults.DECIMAL_SCALE);
-		List<Object> params = CollectionUtils.asList(outputs, toAddresses);
+	public String createRawTransaction(List<RawInput> inputs, Map<String, BigDecimal> outputs) throws BitcoindException, CommunicationException {
+		List<Object> params = CollectionUtils.asList(inputs, outputs);
 		String hexTransactionJson = rpcClient.execute(Commands.CREATE_RAW_TRANSACTION.getName(), 
 				params);
 		String hexTransaction = rpcClient.getParser().parseString(hexTransactionJson);
@@ -375,20 +347,6 @@ public class BtcdClientImpl implements BtcdClient {
 		String difficultyJson = rpcClient.execute(Commands.GET_DIFFICULTY.getName());
 		BigDecimal difficulty = rpcClient.getParser().parseBigDecimal(difficultyJson);
 		return difficulty;
-	}
-
-	@Override
-	public Boolean getGenerate() throws BitcoindException, CommunicationException {
-		String isGenerateJson = rpcClient.execute(Commands.GET_GENERATE.getName());
-		Boolean isGenerate = rpcClient.getParser().parseBoolean(isGenerateJson);
-		return isGenerate;
-	}
-
-	@Override
-	public Long getHashesPerSec() throws BitcoindException, CommunicationException {
-		String hashesPerSecJson = rpcClient.execute(Commands.GET_HASHES_PER_SEC.getName());
-		Long hashesPerSec = rpcClient.getParser().parseLong(hashesPerSecJson);
-		return hashesPerSec;
 	}
 
 	@Override
@@ -1092,15 +1050,14 @@ public class BtcdClientImpl implements BtcdClient {
 	}
 
 	@Override
-	public void setGenerate(Boolean isGenerate) throws BitcoindException, CommunicationException {
-		rpcClient.execute(Commands.SET_GENERATE.getName(), isGenerate);		
-	}
-
-	@Override
-	public void setGenerate(Boolean isGenerate, Integer processors) throws BitcoindException, 
+	public void generate(Integer blocks, Integer maxTries) throws BitcoindException,
 			CommunicationException {
-		List<Object> params = CollectionUtils.asList(isGenerate, processors);
-		rpcClient.execute(Commands.SET_GENERATE.getName(), params);
+		List<Object> params = new ArrayList<>(2);
+		params.add(blocks);
+		if (maxTries != null) {  //Treat as optional - so if null, don't pass anything in
+			params.add(maxTries);
+		}
+		rpcClient.execute(Commands.GENERATE.getName(), params);
 	}
 
 	@Override
