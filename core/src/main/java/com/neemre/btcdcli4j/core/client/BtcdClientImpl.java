@@ -213,9 +213,10 @@ public class BtcdClientImpl implements BtcdClient {
 	}
 
 	@Override
-	public BigDecimal estimateFee(Integer maxBlocks) throws BitcoindException, 
+	public BigDecimal estimateSmartFee(Integer maxBlocks, String estimateMode) throws BitcoindException,
 			CommunicationException {
-		String estimatedFeeJson = rpcClient.execute(Commands.ESTIMATE_FEE.getName(), maxBlocks);
+		List<Object> params = CollectionUtils.asList(maxBlocks, estimateMode);
+		String estimatedFeeJson = rpcClient.execute(Commands.ESTIMATE_SMART_FEE.getName(), maxBlocks);
 		BigDecimal estimatedFee = rpcClient.getParser().parseBigDecimal(estimatedFeeJson);
 		return estimatedFee;
 	}

@@ -75,7 +75,31 @@ public interface BtcdClient {
 
 	String encryptWallet(String passphrase) throws BitcoindException, CommunicationException;
 
-	BigDecimal estimateFee(Integer maxBlocks) throws BitcoindException, CommunicationException;
+	/**
+	 * See https://developer.bitcoin.org/reference/rpc/estimatesmartfee.html
+	 * @param maxBlocks Confirmation target in blocks (1 - 1008)
+	 * @param estimateMode optional, default=CONSERVATIVE
+	 *
+	 * @return
+	 * @throws BitcoindException
+	 * @throws CommunicationException
+	 */
+	BigDecimal estimateSmartFee(Integer maxBlocks, String estimateMode) throws BitcoindException, CommunicationException;
+
+	/**
+	 * See https://developer.bitcoin.org/reference/rpc/estimatesmartfee.html
+	 *
+	 * Friendly cover method that doesn't pass in the optional argument estimateMode
+	 *
+	 * @param maxBlocks Confirmation target in blocks (1 - 1008)
+	 *
+	 * @return
+	 * @throws BitcoindException
+	 * @throws CommunicationException
+	 */
+	default BigDecimal estimateSmartFee(Integer maxBlocks) throws BitcoindException, CommunicationException {
+		return estimateSmartFee(maxBlocks, null);
+	}
 
 	BigDecimal estimatePriority(Integer maxBlocks) throws BitcoindException, CommunicationException;
 

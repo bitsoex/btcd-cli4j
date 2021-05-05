@@ -145,10 +145,10 @@ public class VerboseBtcdClientImpl extends BtcdClientImpl {
 	}	
 
 	@Override
-	public BigDecimal estimateFee(Integer maxBlocks) throws BitcoindException, CommunicationException {
-		BigDecimal estimatedFee = super.estimateFee(maxBlocks);
-		printResult(Commands.ESTIMATE_FEE.getName(), new String[]{"maxBlocks"}, 
-				new Object[]{maxBlocks}, estimatedFee);
+	public BigDecimal estimateSmartFee(Integer maxBlocks, String estimateMode) throws BitcoindException, CommunicationException {
+		BigDecimal estimatedFee = super.estimateSmartFee(maxBlocks, estimateMode);
+		printResult(Commands.ESTIMATE_SMART_FEE.getName(), new String[]{"maxBlocks", "estimateMode"},
+				new Object[]{maxBlocks, estimateMode}, estimatedFee);
 		return estimatedFee;
 	}
 
