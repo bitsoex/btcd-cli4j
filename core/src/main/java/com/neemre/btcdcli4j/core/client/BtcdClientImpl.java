@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.neemre.btcdcli4j.core.domain.EstimateFee;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -216,9 +217,9 @@ public class BtcdClientImpl implements BtcdClient {
 	public BigDecimal estimateSmartFee(Integer maxBlocks, String estimateMode) throws BitcoindException,
 			CommunicationException {
 		List<Object> params = CollectionUtils.asList(maxBlocks, estimateMode);
-		String estimatedFeeJson = rpcClient.execute(Commands.ESTIMATE_SMART_FEE.getName(), maxBlocks);
-		BigDecimal estimatedFee = rpcClient.getParser().parseBigDecimal(estimatedFeeJson);
-		return estimatedFee;
+		String estimatedFeeJson = rpcClient.execute(Commands.ESTIMATE_SMART_FEE.getName(), params);
+		EstimateFee estimateFee = rpcClient.getMapper().mapToEntity(estimatedFeeJson, EstimateFee.class);
+		return estimateFee.getFeeRate();
 	}
 
 	@Override
