@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.neemre.btcdcli4j.core.domain.EstimateFee;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import com.neemre.btcdcli4j.core.BitcoindException;
@@ -145,10 +146,10 @@ public class VerboseBtcdClientImpl extends BtcdClientImpl {
 	}	
 
 	@Override
-	public BigDecimal estimateSmartFee(Integer maxBlocks, String estimateMode) throws BitcoindException, CommunicationException {
-		BigDecimal estimatedFee = super.estimateSmartFee(maxBlocks, estimateMode);
+	public BigDecimal estimateSmartFee(Integer maxBlocks, EstimateFee.Mode mode) throws BitcoindException, CommunicationException {
+		BigDecimal estimatedFee = super.estimateSmartFee(maxBlocks, mode);
 		printResult(Commands.ESTIMATE_SMART_FEE.getName(), new String[]{"maxBlocks", "estimateMode"},
-				new Object[]{maxBlocks, estimateMode}, estimatedFee);
+				new Object[]{maxBlocks, mode}, estimatedFee);
 		return estimatedFee;
 	}
 

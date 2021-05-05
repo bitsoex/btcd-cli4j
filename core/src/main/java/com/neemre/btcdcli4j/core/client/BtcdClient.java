@@ -15,6 +15,7 @@ import com.neemre.btcdcli4j.core.domain.AddressInfo;
 import com.neemre.btcdcli4j.core.domain.AddressOverview;
 import com.neemre.btcdcli4j.core.domain.Block;
 import com.neemre.btcdcli4j.core.domain.BlockChainInfo;
+import com.neemre.btcdcli4j.core.domain.EstimateFee;
 import com.neemre.btcdcli4j.core.domain.Info;
 import com.neemre.btcdcli4j.core.domain.MemPoolInfo;
 import com.neemre.btcdcli4j.core.domain.MiningInfo;
@@ -78,28 +79,13 @@ public interface BtcdClient {
 	/**
 	 * See https://developer.bitcoin.org/reference/rpc/estimatesmartfee.html
 	 * @param maxBlocks Confirmation target in blocks (1 - 1008)
-	 * @param estimateMode optional, default=CONSERVATIVE
+	 * @param mode optional, default=CONSERVATIVE
 	 *
 	 * @return
 	 * @throws BitcoindException
 	 * @throws CommunicationException
 	 */
-	BigDecimal estimateSmartFee(Integer maxBlocks, String estimateMode) throws BitcoindException, CommunicationException;
-
-	/**
-	 * See https://developer.bitcoin.org/reference/rpc/estimatesmartfee.html
-	 *
-	 * Friendly cover method that doesn't pass in the optional argument estimateMode
-	 *
-	 * @param maxBlocks Confirmation target in blocks (1 - 1008)
-	 *
-	 * @return
-	 * @throws BitcoindException
-	 * @throws CommunicationException
-	 */
-	default BigDecimal estimateSmartFee(Integer maxBlocks) throws BitcoindException, CommunicationException {
-		return estimateSmartFee(maxBlocks, null);
-	}
+	BigDecimal estimateSmartFee(Integer maxBlocks, EstimateFee.Mode mode) throws BitcoindException, CommunicationException;
 
 	BigDecimal estimatePriority(Integer maxBlocks) throws BitcoindException, CommunicationException;
 

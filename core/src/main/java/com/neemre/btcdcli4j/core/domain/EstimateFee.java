@@ -22,6 +22,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EstimateFee extends Entity {
 
+	public enum Mode {UNSET, ECONOMICAL, CONSERVATIVE}
+
 	@JsonProperty("feerate")
 	private BigDecimal feeRate;
 	private long blocks;
