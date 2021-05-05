@@ -79,7 +79,7 @@ public interface BtcdClient {
 	/**
 	 * See https://developer.bitcoin.org/reference/rpc/estimatesmartfee.html
 	 * @param maxBlocks Confirmation target in blocks (1 - 1008)
-	 * @param mode optional, default=CONSERVATIVE
+	 * @param mode Which mode to use.  Note that default is CONSERVATIVE
 	 *
 	 * @return
 	 * @throws BitcoindException
