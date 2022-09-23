@@ -36,6 +36,11 @@ Other dependencies:
 If you want to test locally (i.e. not checking in changes to github and doing a jitpack release), run `mvn install`, which will publish jars to your local maven repo as such:
   "com.github.bitsoex.btcd-cli4j:btcd-cli4j-core:1.0-SNAPSHOT"
 
+```
+Make sure about setting the SDK 8 version for the project when using maven install from IDEA
+Or set your JAVA_HOME to Java 1.8 when using it from terminal
+```
+
 In your code depending upon this library, change your dependency to this snapshot version.  You might need to instruct your gradle to search your local maven, so add this to your build.gradle file:
 
 repositories {

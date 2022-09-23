@@ -23,7 +23,8 @@
 		<module>core</module>
 		<module>daemon</module>
 		<module>examples</module>
-	</modules>
+        <module>proto</module>
+    </modules>
 
 	<distributionManagement>
 		<repository>
@@ -38,8 +39,10 @@
 
 		<jdk.version>1.8</jdk.version>
 		<jackson.version>2.9.0</jackson.version>
+        <javax-annotation.version>1.3.2</javax-annotation.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<commons-lang.version>3.3.2</commons-lang.version>
+        <grpc.version>1.49.1</grpc.version>
 	</properties>
 
 	<dependencies>
