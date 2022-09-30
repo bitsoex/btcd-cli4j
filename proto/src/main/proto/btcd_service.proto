@@ -7,6 +7,7 @@ option java_outer_classname = "BtcdServiceProto";
 // getrawtransaction object request
 message GetRawTransactionRequest {
     string txid = 1;
+    bool verbose = 2;
 }
 
 // getrawtransaction object response

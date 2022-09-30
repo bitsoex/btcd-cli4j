@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 
+import com.bitso.model.BtcdServiceProto;
 import com.neemre.btcdcli4j.core.BitcoindException;
 import com.neemre.btcdcli4j.core.CommunicationException;
 import com.neemre.btcdcli4j.core.domain.Account;
@@ -166,6 +168,8 @@ public interface BtcdClient {
 			CommunicationException;
 
 	String getRawTransaction(String txId) throws BitcoindException, CommunicationException;
+
+    Optional<BtcdServiceProto.GetRawTransactionResponse> getRawTransactionResponse(String txId);
 
 	Object getRawTransaction(String txId, Integer verbosity) throws BitcoindException, 
 			CommunicationException;

@@ -5,9 +5,13 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 
+import com.bitso.model.BtcdServiceProto;
+import com.neemre.btcdcli4j.core.NodeProperties;
 import com.neemre.btcdcli4j.core.domain.*;
+import com.neemre.btcdcli4j.core.grpc.BtcdGrpcClient;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +32,7 @@ public class BtcdClientImpl implements BtcdClient {
 
 	private ClientConfigurator configurator;
 	private JsonRpcClient rpcClient;
-
+    private BtcdGrpcClient grpcClient;
 
 	public BtcdClientImpl(Properties nodeConfig) throws BitcoindException, CommunicationException {
 		this(null, nodeConfig);
@@ -37,13 +41,15 @@ public class BtcdClientImpl implements BtcdClient {
 	public BtcdClientImpl(CloseableHttpClient httpProvider, Properties nodeConfig) 
 			throws BitcoindException, CommunicationException {
 		initialize();
+        grpcClient = new BtcdGrpcClient(nodeConfig.getProperty(NodeProperties.RPC_HOST.getDefaultValue()),
+                Integer.parseInt(NodeProperties.RPC_PORT.getDefaultValue()));
 		rpcClient = new JsonRpcClientImpl(configurator.checkHttpProvider(httpProvider), 
 				configurator.checkNodeConfig(nodeConfig));
 		configurator.checkNodeVersion(getNetworkInfo().getVersion());
 		configurator.checkNodeHealth((Block)getBlock(getBestBlockHash(), true));
 	}
 
-	public BtcdClientImpl(String rpcUser, String rpcPassword) throws BitcoindException, 
+	public BtcdClientImpl(String rpcUser, String rpcPassword) throws BitcoindException,
 			CommunicationException {
 		this(null, null, rpcUser, rpcPassword);
 	}
@@ -481,6 +487,17 @@ public class BtcdClientImpl implements BtcdClient {
 		}
 	}
 
+    @Override
+    public Optional<BtcdServiceProto.GetRawTransactionResponse> getRawTransactionResponse(String txId){
+        
+        BtcdServiceProto.GetRawTransactionRequest request = BtcdServiceProto.GetRawTransactionRequest.newBuilder()
+                .setTxid(txId)
+                .setVerbose(true)
+                .build();
+        
+        return grpcClient.getRawTransaction(request);
+    }
+
 	@Override
 	public String getRawTransaction(String txId) throws BitcoindException, CommunicationException {
 		String hexTransactionJson = rpcClient.execute(Commands.GET_RAW_TRANSACTION.getName(), txId);
@@ -488,6 +505,7 @@ public class BtcdClientImpl implements BtcdClient {
 		return hexTransaction;
 	}
 
+    @Deprecated
 	@Override
 	public Object getRawTransaction(String txId, Integer verbosity) throws BitcoindException, 
 			CommunicationException {
