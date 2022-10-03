@@ -169,7 +169,7 @@ public interface BtcdClient {
 
 	String getRawTransaction(String txId) throws BitcoindException, CommunicationException;
 
-    Optional<BtcdServiceProto.GetRawTransactionResponse> getRawTransactionResponse(String txId);
+	Optional<BtcdServiceProto.GetRawTransactionResponse> getRawTransactionResponse(String txId);
 
 	Object getRawTransaction(String txId, Integer verbosity) throws BitcoindException, 
 			CommunicationException;
