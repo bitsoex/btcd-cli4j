@@ -1,112 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <modelVersion>4.0.0</modelVersion>
         <groupId>com.github.bitsoex.btcd-cli4j</groupId>
         <artifactId>btcd-cli4j-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
         <packaging>pom</packaging>
 
-    <name>btcd-cli4j Parent</name>
-    <description>A simple Java wrapper around Bitcoin Core's JSON-RPC (via HTTP) interface</description>
-    <url>http://btcd-cli4j.neemre.com/</url>
+        <name>btcd-cli4j Parent</name>
+        <description>A simple Java wrapper around Bitcoin Core's JSON-RPC (via HTTP) interface</description>
+        <url>http://btcd-cli4j.neemre.com/</url>
 
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+        <licenses>
+                <license>
+                        <name>The Apache Software License, Version 2.0</name>
+                        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+                        <distribution>repo</distribution>
+                </license>
+        </licenses>
 
-    <modules>
-        <module>core</module>
-        <module>daemon</module>
-        <module>examples</module>
-        <module>proto</module>
-    </modules>
+        <modules>
+                <module>core</module>
+                <module>daemon</module>
+                <module>examples</module>
+                <module>proto</module>
+        </modules>
 
-    <distributionManagement>
-        <repository>
-            <id>mvn-nemp-ftp</id>
-            <name>Nemp's Maven Repository</name>
-            <url>ftp://nemp.planet.ee/htdocs/mvn/</url>
-        </repository>
-    </distributionManagement>
+        <distributionManagement>
+                <repository>
+                        <id>mvn-nemp-ftp</id>
+                        <name>Nemp's Maven Repository</name>
+                        <url>ftp://nemp.planet.ee/htdocs/mvn/</url>
+                </repository>
+        </distributionManagement>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <jdk.version>1.8</jdk.version>
-        <jackson.version>2.9.0</jackson.version>
-        <javax-annotation.version>1.3.2</javax-annotation.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <commons-lang.version>3.3.2</commons-lang.version>
-        <grpc.version>1.49.1</grpc.version>
-    </properties>
+                <jdk.version>1.8</jdk.version>
+                <jackson.version>2.9.0</jackson.version>
+                <javax-annotation.version>1.3.2</javax-annotation.version>
+                <slf4j.version>1.7.25</slf4j.version>
+                <commons-lang.version>3.3.2</commons-lang.version>
+                <grpc.version>1.49.1</grpc.version>
+        </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.2</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+        <dependencies>
+                <dependency>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>1.18.2</version>
+                        <scope>provided</scope>
+                </dependency>
+        </dependencies>
 
-    <build>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>2.8</version>
-            </extension>
-        </extensions>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.8</version>
-            </plugin>
-        </plugins>
-    </build>
+        <build>
+                <extensions>
+                        <extension>
+                                <groupId>org.apache.maven.wagon</groupId>
+                                <artifactId>wagon-ftp</artifactId>
+                                <version>2.8</version>
+                        </extension>
+                </extensions>
+                <plugins>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-compiler-plugin</artifactId>
+                                <version>3.2</version>
+                                <configuration>
+                                        <source>${jdk.version}</source>
+                                        <target>${jdk.version}</target>
+                                </configuration>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-jar-plugin</artifactId>
+                                <version>2.6</version>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-source-plugin</artifactId>
+                                <version>2.4</version>
+                                <executions>
+                                        <execution>
+                                                <id>attach-sources</id>
+                                                <goals>
+                                                    <goal>jar</goal>
+                                                </goals>
+                                        </execution>
+                                </executions>
+                        </plugin>
+                    <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.9.1</version>
+                            <executions>
+                                    <execution>
+                                            <id>attach-javadocs</id>
+                                            <goals>
+                                                    <goal>jar</goal>
+                                            </goals>
+                                    </execution>
+                            </executions>
+                    </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-project-info-reports-plugin</artifactId>
+                                <version>2.8</version>
+                        </plugin>
+                </plugins>
+        </build>
 </project>
