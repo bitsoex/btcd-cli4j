@@ -1,0 +1,25 @@
+syntax = "proto3";
+package protos.model;
+
+option java_package = "com.bitso.model";
+option java_outer_classname = "BtcdServiceProto";
+
+// getrawtransaction object request
+message GetRawTransactionRequest {
+    string txid = 1;
+    bool verbose = 2;
+}
+
+// getrawtransaction object response
+message GetRawTransactionResponse {
+    string txid = 1;
+    string hex = 2;
+}
+
+// the deposit btcd service definition
+service BtcdService {
+
+  // getrawtransaction method definition
+  rpc GetRawTransaction (GetRawTransactionRequest) returns (GetRawTransactionResponse) {}
+
+}
