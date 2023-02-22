@@ -26,6 +26,7 @@ public class RawOutput extends Entity {
 	private BigDecimal value;
 	private Integer n;
 	private PubKeyScript scriptPubKey;
+	private boolean ismweb;
 
 
 	public RawOutput(BigDecimal value, Integer n, PubKeyScript scriptPubKey) {
