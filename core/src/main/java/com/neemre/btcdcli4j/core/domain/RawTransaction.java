@@ -26,5 +26,7 @@ public class RawTransaction extends RawTransactionOverview {
 	private Long time;
 	@JsonProperty("blocktime")
 	private Long blockTime;
+	@JsonProperty("timereceived")
+	private Long timeReceived;
 	private String hex;
 }
