@@ -20,6 +20,7 @@ public enum NetworkTypes {
 	IPV6("ipv6"),
 	ONION("onion"),
 	I2P("i2p"),
+	CJDNS("cjdns"),
 	EMPTY("");
 
 	private final String name;
