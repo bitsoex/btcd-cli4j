@@ -25,14 +25,6 @@
 		<module>examples</module>
 	</modules>
 
-	<distributionManagement>
-		<repository>
-			<id>mvn-nemp-ftp</id>
-			<name>Nemp's Maven Repository</name>
-			<url>ftp://nemp.planet.ee/htdocs/mvn/</url>
-		</repository>
-	</distributionManagement>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
